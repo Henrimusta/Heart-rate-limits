@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { useEffect } from 'react';
 
 export default function App() {
   const [age, setAge] = useState('');
@@ -14,6 +15,10 @@ export default function App() {
     setHrHigh(highHR.toFixed(0))
   }
 
+  useEffect(() => {
+    calculate()
+  }, [age])
+
   return (
     <View style={styles.container}>
       <Text style={styles.field}>Age</Text>
@@ -24,10 +29,10 @@ export default function App() {
         onChangeText={text =>
           setAge(text)
         }
+        onBlur={calculate}
       />
       <Text style={styles.field}>HR limits</Text>
       <Text style={styles.field}>{hrLow} - {hrHigh}</Text>
-      <Button onPress={calculate} title="Calculate" />
       <StatusBar style="auto" />
     </View>
   );
